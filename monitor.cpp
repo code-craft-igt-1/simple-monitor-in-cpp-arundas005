@@ -29,10 +29,8 @@ auto stringify(VitalType vitalTypes) {
 int vitalsOk(float temperature, float pulseRate, float spo2) {
   vector<VitalType> vitals = {VitalType::TEMPERATURE, VitalType::PULSE_RATE, VitalType::SPO2};
   vector<float> vitalValues = {temperature, pulseRate, spo2};
-  for (int i = 0; i < vitals.size(); i++)
-  {
-    if (!vitalsInNormalRange(vitalValues[i], vitalLimits[i].first, vitalLimits[i].second))
-    {
+  for (int i = 0; i < vitals.size(); i++) {
+    if (!vitalsInNormalRange(vitalValues[i], vitalLimits[i].first, vitalLimits[i].second)) {
       alert(stringify(vitals[i]));
       return 0;
     }
@@ -48,8 +46,7 @@ void alert(const string& vitalName) {
   const int REPEAT_COUNT = 6;
   const int SLEEP_INTERVAL_SECONDS = 1;
   cout << vitalName << " is out of range!\n";
-  for (int i = 0; i < REPEAT_COUNT; i++)
-  {
+  for (int i = 0; i < REPEAT_COUNT; i++) {
     cout << "\r* " << flush;
     sleep_for(seconds(SLEEP_INTERVAL_SECONDS));
     cout << "\r *" << flush;
