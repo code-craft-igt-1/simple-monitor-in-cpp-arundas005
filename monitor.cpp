@@ -24,17 +24,8 @@ vector<pair<float,float>> vitalLimits = {
 
 auto stringify(VitalType vitalTypes)
 {
-  switch (vitalTypes)
-  {
-  case VitalType::TEMPERATURE:
-    return "Temperature";
-  case VitalType::PULSE_RATE:
-    return "Pulse Rate";
-  case VitalType::SPO2:
-    return "Oxygen Saturation";
-  default:
-    return "Invalid VitalType";
-  }
+  vector<string> vitalNames = {"Temperature", "Pulse Rate", "Oxygen Saturation"};
+  return vitalNames[static_cast<int>(vitalTypes)];
 }
 
 int vitalsOk(float temperature, float pulseRate, float spo2)
@@ -57,7 +48,7 @@ bool vitalsInNormalRange(float value, float lowerLimit, float upperLimit)
   return value >= lowerLimit && value <= upperLimit;
 }
 
-void alert(const char* vitalName)
+void alert(const string& vitalName)
 {
   const int REPEAT_COUNT = 6;
   const int SLEEP_INTERVAL_SECONDS = 1;
