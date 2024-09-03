@@ -21,7 +21,7 @@ vector<pair<float, float>> vitalLimits = {
   {90.0f, 100.0f}
 };
 
-auto getErrorMessage(VitalType vitalTypes) {
+auto getAlertMessage(VitalType vitalTypes) {
   vector<string> alertMessages = {"Temperature is critical !!",
                                   "Pulse Rate out of range !!",
                                   "Oxygen Saturation low !!"};
@@ -33,7 +33,7 @@ int vitalsOk(float temperature, float pulseRate, float spo2) {
   vector<float> vitalValues = {temperature, pulseRate, spo2};
   for (int i = 0; i < vitals.size(); i++) {
     if (!isVitalsInNormalRange(vitalValues[i], vitalLimits[i].first, vitalLimits[i].second)) {
-      alert(getErrorMessage(vitals[i]));
+      alert(getAlertMessage(vitals[i]));
       return 0;
     }
   }
