@@ -29,6 +29,10 @@ extern std::map<VitalType, HealthParameterLimits> healthParameterRanges;
 
 void createHealthParameterRanges(const std::vector<HealthParameterLimitsAndTolerence>&
                                                             healthParamLimitsNTolerence);
+void setVitalLimits(HealthParameterLimits* healthParamLimits,
+                    const std::vector<HealthParameterLimitsAndTolerence>&
+                                         healthParamLimitsNTolerence,
+                                         int index);
 void convertCelsiusToFarenheit(HealthParameter* temperaturearameter);
 HealthParameterLimits getHealthParamLimits(VitalType vitalType);
 int vitalsOk(std::vector<HealthParameter> healthParams);

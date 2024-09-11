@@ -32,43 +32,39 @@ void convertCelsiusToFarenheit(HealthParameter* temperaturearameter) {
   }
 }
 
+void setVitalLimits(HealthParameterLimits* healthParamLimits,
+                    const vector<HealthParameterLimitsAndTolerence>&
+                                         healthParamLimitsNTolerence,
+                                                           int index) {
+  healthParamLimits->lowerLimit = healthParamLimitsNTolerence[index].lowerLimit;
+  float tolerance = healthParamLimitsNTolerence[index].upperLimit *
+  healthParamLimitsNTolerence[index].warningTolerance / 100.0f;
+  healthParamLimits->warningLowerLimit = healthParamLimitsNTolerence[index].lowerLimit +
+                                                                                  tolerance;
+  healthParamLimits->normallimit = healthParamLimitsNTolerence[index].upperLimit -
+                                                                            tolerance;
+  healthParamLimits->warningUpperLimit = healthParamLimitsNTolerence[index].upperLimit;                             
+}
+
 void createHealthParameterRanges(const vector<HealthParameterLimitsAndTolerence>&
                                                        healthParamLimitsNTolerence) {
   for (int i = 0; i < healthParamLimitsNTolerence.size(); i++) {
     switch (healthParamLimitsNTolerence[i].vitalType) {
       case VitalType::TEMPERATURE: {
         HealthParameterLimits temperatureParamLimits;
-        temperatureParamLimits.lowerLimit = healthParamLimitsNTolerence[i].lowerLimit;
-        float tolerance = healthParamLimitsNTolerence[i].upperLimit *
-        healthParamLimitsNTolerence[i].warningTolerance;
-        temperatureParamLimits.warningLowerLimit = healthParamLimitsNTolerence[i].lowerLimit +
-                                                                                  tolerance;
-        temperatureParamLimits.normallimit = healthParamLimitsNTolerence[i].upperLimit -
-                                                                            tolerance;
-        temperatureParamLimits.warningUpperLimit = healthParamLimitsNTolerence[i].upperLimit;
+        setVitalLimits(&temperatureParamLimits, healthParamLimitsNTolerence, i);
         healthParameterRanges[VitalType::TEMPERATURE] = temperatureParamLimits;
         break;
       }
       case VitalType::PULSE_RATE: {
         HealthParameterLimits pulseRateParamLimits;
-        pulseRateParamLimits.lowerLimit = healthParamLimitsNTolerence[i].lowerLimit;
-        float tolerance = healthParamLimitsNTolerence[i].upperLimit * 
-        healthParamLimitsNTolerence[i].warningTolerance;
-        pulseRateParamLimits.warningLowerLimit = healthParamLimitsNTolerence[i].lowerLimit +
-                                                                                tolerance;
-        pulseRateParamLimits.normallimit = healthParamLimitsNTolerence[i].upperLimit - tolerance;
-        pulseRateParamLimits.warningUpperLimit = healthParamLimitsNTolerence[i].upperLimit;
+        setVitalLimits(&pulseRateParamLimits, healthParamLimitsNTolerence, i);
         healthParameterRanges[VitalType::PULSE_RATE] = pulseRateParamLimits;
         break;
       }
       case VitalType::SPO2: {
         HealthParameterLimits spo2ParamLimits;
-        spo2ParamLimits.lowerLimit = healthParamLimitsNTolerence[i].lowerLimit;
-        float tolerance = healthParamLimitsNTolerence[i].upperLimit *
-        healthParamLimitsNTolerence[i].warningTolerance;
-        spo2ParamLimits.warningLowerLimit = healthParamLimitsNTolerence[i].lowerLimit + tolerance;
-        spo2ParamLimits.normallimit = healthParamLimitsNTolerence[i].upperLimit - tolerance;
-        spo2ParamLimits.warningUpperLimit = healthParamLimitsNTolerence[i].upperLimit;
+        setVitalLimits(&spo2ParamLimits, healthParamLimitsNTolerence, i);
         healthParameterRanges[VitalType::SPO2] = spo2ParamLimits;
         break;
       }
