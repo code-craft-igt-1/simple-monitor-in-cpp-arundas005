@@ -4,7 +4,7 @@
 using std::vector;
 
 class MonitorTest : public ::testing::Test {
-protected:
+ protected:
   vector<HealthParameter> healthParamsforTest;
 
   void SetUp() override {

@@ -1,14 +1,14 @@
 #pragma once
-#include "alertMessages.h"
-#include "./VitalParameterInfo.h"
 #include <string>
 #include <map>
 #include <vector>
+#include "./alertMessages.h"
+#include "./VitalParameterInfo.h"
 
 struct HealthParameter {
   VitalType vitalType;
   VitalUnit unit;
-  float vitalValue; 
+  float vitalValue;
 };
 
 struct HealthParameterLimitsAndTolerence {
@@ -27,9 +27,12 @@ struct HealthParameterLimits{
 
 extern std::map<VitalType, HealthParameterLimits> healthParameterRanges;
 
-void createHealthParameterRanges(const std::vector<HealthParameterLimitsAndTolerence>& healthParamLimitsNTolerence);
-void convertCelsiusToFarenheit(HealthParameter& temperaturearameter);
+void createHealthParameterRanges(const std::vector<HealthParameterLimitsAndTolerence>&
+                                                            healthParamLimitsNTolerence);
+void convertCelsiusToFarenheit(HealthParameter* temperaturearameter);
 HealthParameterLimits getHealthParamLimits(VitalType vitalType);
 int vitalsOk(std::vector<HealthParameter> healthParams);
-VITAL_RANGE_CLASSIFICATION getVitalCondition(HealthParameter healthParam, HealthParameterLimits healthParamLimits);
+VITAL_RANGE_CLASSIFICATION getVitalCondition(HealthParameter healthParam,
+                                             HealthParameterLimits healthParamLimits);
 void alert(const std::wstring& message);
+

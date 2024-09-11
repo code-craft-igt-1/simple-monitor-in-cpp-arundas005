@@ -26,7 +26,7 @@ map<VITAL_RANGE_CLASSIFICATION, wstring> SPO2RangeToMessage = {
 };
 
 wstring getAlertMessage(VitalType vitalType, VITAL_RANGE_CLASSIFICATION vitalRangeClassification) {
-    switch(vitalType) {
+    switch (vitalType) {
         case VitalType::TEMPERATURE:
             return TemperaureRangeToMessage[vitalRangeClassification];
         case VitalType::PULSE_RATE:

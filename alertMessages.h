@@ -16,5 +16,5 @@ extern std::map<VITAL_RANGE_CLASSIFICATION, std::wstring> SPO2RangeToMessage;
 extern const LANGUAGE CURRENT_LANGUAGE;
 extern const std::vector<std::vector<std::wstring>> alertMessages;
 
-std::wstring getAlertMessage(VitalType vitalType, VITAL_RANGE_CLASSIFICATION vitalRangeClassification);
-
+std::wstring getAlertMessage(VitalType vitalType,
+                             VITAL_RANGE_CLASSIFICATION vitalRangeClassification);

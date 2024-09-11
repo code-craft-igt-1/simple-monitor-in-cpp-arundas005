@@ -15,7 +15,7 @@ vector<HealthParameter> healthParams = {
   /*  Type                        Unit              Value */
   {VitalType::TEMPERATURE,   VitalUnit::FARENHEIT,   98.0f},
   {VitalType::PULSE_RATE,    VitalUnit::BPM,         80.0f},
-  {VitalType::SPO2,          VitalUnit::PERCENT,     95.0f},      
+  {VitalType::SPO2,          VitalUnit::PERCENT,     95.0f},  
 };
 
 vector<HealthParameterLimitsAndTolerence> healthParameterLimitsAndTolerence = {
@@ -24,23 +24,28 @@ vector<HealthParameterLimitsAndTolerence> healthParameterLimitsAndTolerence = {
   {VitalType::SPO2, 90.0f, 100.0f, 1.2f}
 };
 
-void convertCelsiusToFarenheit(HealthParameter& temperaturearameter) {
-  if(temperaturearameter.vitalType == VitalType::TEMPERATURE && temperaturearameter.unit == VitalUnit::CELSIUS) {
-    temperaturearameter.vitalValue = (temperaturearameter.vitalValue * 9.0f / 5.0f) + 32;
-    temperaturearameter.unit = VitalUnit::FARENHEIT;
+void convertCelsiusToFarenheit(HealthParameter* temperaturearameter) {
+  if (temperaturearameter->vitalType == VitalType::TEMPERATURE &&
+      temperaturearameter->unit == VitalUnit::CELSIUS) {
+    temperaturearameter->vitalValue = (temperaturearameter->vitalValue * 9.0f / 5.0f) + 32;
+    temperaturearameter->unit = VitalUnit::FARENHEIT;
   }
 }
 
-void createHealthParameterRanges( const vector<HealthParameterLimitsAndTolerence>& healthParamLimitsNTolerence)
+void createHealthParameterRanges( const vector<HealthParameterLimitsAndTolerence>&
+                                                       healthParamLimitsNTolerence)
 {
-  for(int i = 0; i < healthParamLimitsNTolerence.size(); i++) {
-    switch(healthParamLimitsNTolerence[i].vitalType) {
+  for (int i = 0; i < healthParamLimitsNTolerence.size(); i++) {
+    switch (healthParamLimitsNTolerence[i].vitalType) {
       case VitalType::TEMPERATURE: {
         HealthParameterLimits temperatureParamLimits;
         temperatureParamLimits.lowerLimit = healthParamLimitsNTolerence[i].lowerLimit;
-        float tolerance = healthParamLimitsNTolerence[i].upperLimit * healthParamLimitsNTolerence[i].warningTolerance;
-        temperatureParamLimits.warningLowerLimit = healthParamLimitsNTolerence[i].lowerLimit + tolerance;
-        temperatureParamLimits.normallimit = healthParamLimitsNTolerence[i].upperLimit - tolerance;
+        float tolerance = healthParamLimitsNTolerence[i].upperLimit * 
+                          healthParamLimitsNTolerence[i].warningTolerance;
+        temperatureParamLimits.warningLowerLimit = healthParamLimitsNTolerence[i].lowerLimit +
+                                                                                  tolerance;
+        temperatureParamLimits.normallimit = healthParamLimitsNTolerence[i].upperLimit -
+                                                                            tolerance;
         temperatureParamLimits.warningUpperLimit = healthParamLimitsNTolerence[i].upperLimit;
         healthParameterRanges[VitalType::TEMPERATURE] = temperatureParamLimits;
         break;
@@ -48,8 +53,10 @@ void createHealthParameterRanges( const vector<HealthParameterLimitsAndTolerence
       case VitalType::PULSE_RATE: {
         HealthParameterLimits pulseRateParamLimits;
         pulseRateParamLimits.lowerLimit = healthParamLimitsNTolerence[i].lowerLimit;
-        float tolerance = healthParamLimitsNTolerence[i].upperLimit * healthParamLimitsNTolerence[i].warningTolerance;
-        pulseRateParamLimits.warningLowerLimit = healthParamLimitsNTolerence[i].lowerLimit + tolerance;
+        float tolerance = healthParamLimitsNTolerence[i].upperLimit * 
+                                       healthParamLimitsNTolerence[i].warningTolerance;
+        pulseRateParamLimits.warningLowerLimit = healthParamLimitsNTolerence[i].lowerLimit +
+                                                                                tolerance;
         pulseRateParamLimits.normallimit = healthParamLimitsNTolerence[i].upperLimit - tolerance;
         pulseRateParamLimits.warningUpperLimit = healthParamLimitsNTolerence[i].upperLimit;
         healthParameterRanges[VitalType::PULSE_RATE] = pulseRateParamLimits;
@@ -58,7 +65,8 @@ void createHealthParameterRanges( const vector<HealthParameterLimitsAndTolerence
       case VitalType::SPO2: {
         HealthParameterLimits spo2ParamLimits;
         spo2ParamLimits.lowerLimit = healthParamLimitsNTolerence[i].lowerLimit;
-        float tolerance = healthParamLimitsNTolerence[i].upperLimit * healthParamLimitsNTolerence[i].warningTolerance;
+        float tolerance = healthParamLimitsNTolerence[i].upperLimit * 
+                                  healthParamLimitsNTolerence[i].warningTolerance;
         spo2ParamLimits.warningLowerLimit = healthParamLimitsNTolerence[i].lowerLimit + tolerance;
         spo2ParamLimits.normallimit = healthParamLimitsNTolerence[i].upperLimit - tolerance;
         spo2ParamLimits.warningUpperLimit = healthParamLimitsNTolerence[i].upperLimit;
@@ -75,7 +83,8 @@ HealthParameterLimits getHealthParamLimits(VitalType vitalType) {
 
 int vitalsOk(vector<HealthParameter> _healthParams) {
   for (int i = 0; i < _healthParams.size(); i++) {
-    VITAL_RANGE_CLASSIFICATION vitalCondition = getVitalCondition(_healthParams[i], getHealthParamLimits(_healthParams[i].vitalType));
+    VITAL_RANGE_CLASSIFICATION vitalCondition = getVitalCondition(_healthParams[i], 
+                                              getHealthParamLimits(_healthParams[i].vitalType));
     if (VITAL_RANGE_CLASSIFICATION::NORMAL != vitalCondition) {
       alert(getAlertMessage(_healthParams[i].vitalType, vitalCondition));
       return 0;
@@ -85,7 +94,7 @@ int vitalsOk(vector<HealthParameter> _healthParams) {
 }
 
 VITAL_RANGE_CLASSIFICATION getVitalCondition(HealthParameter healthParam, HealthParameterLimits healthParamLimits) {
-  convertCelsiusToFarenheit(healthParam);
+  convertCelsiusToFarenheit(&healthParam);
   int index = static_cast<int>(healthParam.vitalType);
   healthParamLimits.lowerLimit = healthParameterLimitsAndTolerence[index].lowerLimit;
   float tolerance = healthParameterLimitsAndTolerence[index].upperLimit * healthParameterLimitsAndTolerence[index].warningTolerance / 100.0f;
@@ -113,8 +122,8 @@ void alert(const wstring& message) {
   wcout << message << endl;
   for (int i = 0; i < REPEAT_COUNT; i++) {
     wcout << L"\r* " << flush;
-    //sleep_for(seconds(SLEEP_INTERVAL_SECONDS));
+    sleep_for(seconds(SLEEP_INTERVAL_SECONDS));
     wcout << L"\r *" << flush;
-    //sleep_for(seconds(SLEEP_INTERVAL_SECONDS));
+    sleep_for(seconds(SLEEP_INTERVAL_SECONDS));
   }
 }
