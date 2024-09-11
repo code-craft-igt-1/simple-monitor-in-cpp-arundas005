@@ -43,7 +43,7 @@ void setVitalLimits(HealthParameterLimits* healthParamLimits,
                                                                                   tolerance;
   healthParamLimits->normallimit = healthParamLimitsNTolerence[index].upperLimit -
                                                                             tolerance;
-  healthParamLimits->warningUpperLimit = healthParamLimitsNTolerence[index].upperLimit;                             
+  healthParamLimits->warningUpperLimit = healthParamLimitsNTolerence[index].upperLimit;
 }
 
 void createHealthParameterRanges(const vector<HealthParameterLimitsAndTolerence>&
