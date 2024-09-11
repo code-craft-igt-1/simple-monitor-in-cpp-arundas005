@@ -49,27 +49,10 @@ void setVitalLimits(HealthParameterLimits* healthParamLimits,
 void createHealthParameterRanges(const vector<HealthParameterLimitsAndTolerence>&
                                                        healthParamLimitsNTolerence) {
   for (int i = 0; i < healthParamLimitsNTolerence.size(); i++) {
-    switch (healthParamLimitsNTolerence[i].vitalType) {
-      case VitalType::TEMPERATURE: {
-        HealthParameterLimits temperatureParamLimits;
-        setVitalLimits(&temperatureParamLimits, healthParamLimitsNTolerence, i);
-        healthParameterRanges[VitalType::TEMPERATURE] = temperatureParamLimits;
-        break;
-      }
-      case VitalType::PULSE_RATE: {
-        HealthParameterLimits pulseRateParamLimits;
-        setVitalLimits(&pulseRateParamLimits, healthParamLimitsNTolerence, i);
-        healthParameterRanges[VitalType::PULSE_RATE] = pulseRateParamLimits;
-        break;
-      }
-      case VitalType::SPO2: {
-        HealthParameterLimits spo2ParamLimits;
-        setVitalLimits(&spo2ParamLimits, healthParamLimitsNTolerence, i);
-        healthParameterRanges[VitalType::SPO2] = spo2ParamLimits;
-        break;
-      }
+        HealthParameterLimits healthParamLimits;
+        setVitalLimits(&healthParamLimits, healthParamLimitsNTolerence, i);
+        healthParameterRanges[static_cast<VitalType>(i)] = healthParamLimits;
     }
-  }
 }
 
 HealthParameterLimits getHealthParamLimits(VitalType vitalType) {

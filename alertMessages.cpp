@@ -25,14 +25,12 @@ map<VITAL_RANGE_CLASSIFICATION, wstring> SPO2RangeToMessage = {
     {VITAL_RANGE_CLASSIFICATION::HIGH, wstring(L"Patient experiencing hyperoxemia !!")}
 };
 
+std::map<VitalType, std::map<VITAL_RANGE_CLASSIFICATION, std::wstring>> alertMessagesMap = {
+    {VitalType::TEMPERATURE, TemperaureRangeToMessage},
+    {VitalType::PULSE_RATE, PulseRateRangeToMessage},
+    {VitalType::SPO2, SPO2RangeToMessage}
+};
+
 wstring getAlertMessage(VitalType vitalType, VITAL_RANGE_CLASSIFICATION vitalRangeClassification) {
-    switch (vitalType) {
-        case VitalType::TEMPERATURE:
-            return TemperaureRangeToMessage[vitalRangeClassification];
-        case VitalType::PULSE_RATE:
-            return PulseRateRangeToMessage[vitalRangeClassification];
-        case VitalType::SPO2:
-            return SPO2RangeToMessage[vitalRangeClassification];
-        default: return L"Unknown vital type !!";
-    }
+    return alertMessagesMap[vitalType][vitalRangeClassification];
 }
