@@ -35,15 +35,18 @@ map<VITAL_RANGE_CLASSIFICATION, wstring> TemperaureRangeToMessage_ES = {
 map<VITAL_RANGE_CLASSIFICATION, wstring> PulseRateRangeToMessage_ES = {
     {VITAL_RANGE_CLASSIFICATION::LOW, wstring(L"¡El paciente experimenta bradicardia!!")},
     {VITAL_RANGE_CLASSIFICATION::NEAR_LOW, wstring(L"¡El paciente se acerca a la bradicardia!!")},
-    {VITAL_RANGE_CLASSIFICATION::NORMAL, wstring(L"¡La frecuencia del pulso del paciente es normal!!")},
+    {VITAL_RANGE_CLASSIFICATION::NORMAL,
+                                 wstring(L"¡La frecuencia del pulso del paciente es normal!!")},
     {VITAL_RANGE_CLASSIFICATION::NEAR_HIGH, wstring(L"¡El paciente se acerca a la taquicardia!!")},
     {VITAL_RANGE_CLASSIFICATION::HIGH, wstring(L"¡El paciente experimenta taquicardia!!")}
 };
 map<VITAL_RANGE_CLASSIFICATION, wstring> SPO2RangeToMessage_ES = {
     {VITAL_RANGE_CLASSIFICATION::LOW, wstring(L"¡El paciente experimenta hipoxemia!!")},
     {VITAL_RANGE_CLASSIFICATION::NEAR_LOW, wstring(L"¡El paciente se acerca a la hipoxemia!!")},
-    {VITAL_RANGE_CLASSIFICATION::NORMAL, wstring(L"¡La saturación de oxígeno del paciente es normal!!")},
-    {VITAL_RANGE_CLASSIFICATION::NEAR_HIGH, wstring(L"¡El paciente se acerca a la hiperoxemia!!")},
+    {VITAL_RANGE_CLASSIFICATION::NORMAL,
+                                 wstring(L"¡La saturación de oxígeno del paciente es normal!!")},
+    {VITAL_RANGE_CLASSIFICATION::NEAR_HIGH,
+                                 wstring(L"¡El paciente se acerca a la hiperoxemia!!")},
     {VITAL_RANGE_CLASSIFICATION::HIGH, wstring(L"¡El paciente experimenta hiperoxemia!!")}
 };
 
