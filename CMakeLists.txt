@@ -18,6 +18,11 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
+# Add this line to set the exception handling flag for MSVC
+if(MSVC)
+    add_compile_options(/EHsc)
+endif()
+
 file(GLOB SOURCES "*.cpp")
 add_executable(
     test-monitor
